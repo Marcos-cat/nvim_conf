@@ -29,8 +29,6 @@ end
 require('mason').setup()
 require('mason-lspconfig').setup()
 
-local util = require 'lspconfig.util'
-
 local servers = {
     bashls = {},
     jdtls = {},
@@ -51,7 +49,6 @@ local servers = {
     rust_analyzer = {
         cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
         filetypes = { 'rust' },
-        root_dir = util.root_pattern 'Cargo.toml',
         ['rust-analyzer'] = { cargo = { allFeatures = true } },
     },
 
