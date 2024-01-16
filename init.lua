@@ -2,7 +2,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- [[ Install `lazy.nvim` plugin manager ]]
-dofile 'lua/.lazy-bootstrap.lua' -- Same as require but takes file name with dots
+require 'lazy-bootstrap'
 
 -- [[ Configure plugins ]]
 require 'lazy-plugins'
