@@ -3,9 +3,9 @@ local tb = require 'telescope.builtin'
 local lsp = vim.lsp.buf
 
 local on_attach = function(_, bufnr)
-    ---@type LazyKeys[]
+    ---@type CustomMapping[]
     local mappings = {
-        { '<leader>ra', lsp.rename, desc = 'Rename' },
+        -- { '<leader>ra', lsp.rename, desc = 'Rename' }, -- [[ Uses IncRename instead ]]
         { '<leader>ca', lsp.code_action, desc = 'Code Action' },
         { 'gd', tb.lsp_definitions, desc = 'Goto Definition' },
         { 'gr', tb.lsp_references, desc = 'Goto References' },

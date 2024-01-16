@@ -4,7 +4,16 @@ end
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
----@type LazyKeys[]
+---@alias MapModes 'c'|'x'|'v'|'n'|'i'
+
+---@class CustomMapping
+---@field [1] string
+---@field [2] string|function
+---@field desc? string
+---@field mode? MapModes|MapModes[]
+---@field buffer? integer
+
+---@type CustomMapping[]
 local mappings = {
     { '<leader>sa', ':w <CR>', desc = 'Save' },
     { '<BS>', cmd 'e #', desc = 'Previous Buffer' },
@@ -13,9 +22,20 @@ local mappings = {
     { '<leader>ra', ':IncRename ', desc = 'Rename' },
     { 'D', '<C-d>zz' },
     { 'U', '<C-u>zz' },
+    { 'J', 'mzJ`z' },
+
+    -- [[ Copy/Paste ]]
+
+    { 'p', '""p', mode = { 'v', 'x', 'n' } },
+    { '<leader>p', '"+p""', mode = { 'v', 'x', 'n' } },
+    { 'y', '""y', mode = { 'v', 'x', 'n' } },
+    { 'y', '""y', mode = { 'v', 'x', 'n' } },
+
+    { 'y', '""y', mode = { 'v', 'x', 'n' } },
+    { '<leader>y', '"+y', mode = { 'v', 'x', 'n' } },
 }
 
----@param map_table LazyKeys[]
+---@param map_table CustomMapping[]
 local function register_mappings(map_table)
     for _, map in ipairs(map_table) do
         local lhs = map[1]

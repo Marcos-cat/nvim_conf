@@ -1,6 +1,12 @@
 ---@type LazySpec[]
 require('lazy').setup({
     {
+        'norcalli/nvim-colorizer.lua',
+        event = 'VeryLazy',
+        opts = { ['*'] = { names = false, RGB = false } },
+    },
+    { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
+    {
         'folke/trouble.nvim',
         opts = {},
         keys = {
@@ -81,14 +87,11 @@ require('lazy').setup({
         },
     },
 
-    -- "gc" to comment visual regions/lines
     {
         'numToStr/Comment.nvim',
-        ---@type CommentConfig
         opts = {},
     },
 
-    -- Fuzzy Finder (files, lsp, etc)
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
@@ -104,7 +107,6 @@ require('lazy').setup({
     },
 
     {
-        -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
