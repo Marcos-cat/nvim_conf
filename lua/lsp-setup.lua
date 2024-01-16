@@ -29,13 +29,47 @@ end
 require('mason').setup()
 require('mason-lspconfig').setup()
 
+local util = require 'lspconfig.util'
+
 local servers = {
-    clangd = {},
-    gopls = {},
-    pyright = {},
-    rust_analyzer = {},
+    bashls = {},
+    jdtls = {},
+    cssls = {},
+    svelte = {},
+    ocamllsp = {},
+    taplo = {},
+    htmx = {},
+    vimls = {},
     tsserver = {},
     html = {},
+    templ = {},
+    gopls = {},
+    pyright = {},
+
+    clangd = { filetypes = { 'c', 'cpp' } },
+
+    rust_analyzer = {
+        cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
+        filetypes = { 'rust' },
+        root_dir = util.root_pattern 'Cargo.toml',
+        ['rust-analyzer'] = { cargo = { allFeatures = true } },
+    },
+
+    ltex = {
+        autostart = false,
+        ltex = {
+            completionEnabled = true,
+            dictionary = { ['en-US'] = { 'uiua', 'nvim', 'vim', 'todo' } },
+            checkFrequency = 'save',
+        },
+    },
+
+    jsonls = {
+        -- TODO schema store stuff
+        filetypes = { 'json', 'jsonc' },
+    },
+
+    emmet_language_server = { filetypes = { 'html', 'svelte', 'templ' } },
 
     lua_ls = {
         Lua = {
@@ -66,7 +100,10 @@ mason_lspconfig.setup_handlers {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = servers[server_name],
+            cmd = (servers[server_name] or {}).cmd,
+            root_dir = (servers[server_name] or {}).root_dir,
             filetypes = (servers[server_name] or {}).filetypes,
+            autostart = (servers[server_name] or {}).autostart,
         }
     end,
 }

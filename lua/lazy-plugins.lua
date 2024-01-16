@@ -1,11 +1,31 @@
 ---@type LazySpec[]
 require('lazy').setup({
     {
+        'folke/trouble.nvim',
+        opts = {},
+        keys = {
+            {
+                '<leader>q',
+                function()
+                    require('trouble').open()
+                end,
+                'Trouble',
+            },
+        },
+    },
+    {
+        'onsails/lspkind.nvim',
+        opts = {},
+        config = function(_, opts)
+            require('lspkind').init(opts)
+        end,
+    },
+    {
         'neovim/nvim-lspconfig',
         dependencies = {
             { 'williamboman/mason.nvim', config = true },
             'williamboman/mason-lspconfig.nvim',
-
+            'neovim/nvim-lspconfig',
             'folke/neodev.nvim',
         },
     },
@@ -38,36 +58,10 @@ require('lazy').setup({
         },
     },
     {
-        'catppuccin/nvim',
-        name = 'catppuccin',
-        priority = 1000,
-        ---@type CatppuccinOptions
-        opts = {
-            flavour = 'mocha',
-            -- custom_highlights = function(colors)
-            --     return {
-            --         ['@punctuation.bracket'] = { fg = colors.red },
-            --         ['@parameter'] = { fg = colors.red },
-            --         ['@property'] = { fg = colors.red },
-            --         ['@field'] = { fg = colors.red },
-            --         ['@variable.builtin'] = { fg = colors.text },
-            --         ['@constructor.lua'] = { fg = colors.sky },
-            --         ['@operator'] = { fg = colors.subtext0 },
-            --     }
-            -- end,
-        },
-        config = function(_, opts)
-            require('catppuccin').setup(opts)
-            vim.cmd.colorscheme 'catppuccin-mocha'
-        end,
-    },
-    {
-        -- Set lualine as statusline
         'nvim-lualine/lualine.nvim',
-        -- See `:help lualine.txt`
         opts = {
             options = {
-                icons_enabled = false,
+                icons_enabled = true,
                 theme = 'catppuccin-mocha',
                 component_separators = '|',
                 section_separators = '',
@@ -82,8 +76,8 @@ require('lazy').setup({
         opts = {
             indent = { char = '│' },
             scope = {
-                show_start = false
-            }
+                show_start = false,
+            },
         },
     },
 
@@ -91,22 +85,16 @@ require('lazy').setup({
     {
         'numToStr/Comment.nvim',
         ---@type CommentConfig
-        opts = {}
+        opts = {},
     },
 
     -- Fuzzy Finder (files, lsp, etc)
     {
         'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-            -- Only load if `make` is available. Make sure you have the system
-            -- requirements installed.
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
-                -- NOTE: If you are having trouble with this installation,
-                --       refer to the README for telescope-fzf-native for more instructions.
                 build = 'make',
                 cond = function()
                     return vim.fn.executable 'make' == 1

@@ -1,3 +1,11 @@
+vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+        if vim.fn.argc() == 0 then
+            vim.cmd 'Telescope find_files'
+        end
+    end,
+})
+
 vim.o.ignorecase = true
 vim.o.smartcase = true
 

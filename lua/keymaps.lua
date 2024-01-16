@@ -1,20 +1,18 @@
--- [[ Basic Keymaps ]]
-
 local function cmd(s)
-    return "<cmd> " .. s .. " <CR>"
+    return '<cmd> ' .. s .. ' <CR>'
 end
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 ---@type LazyKeys[]
 local mappings = {
-    { '<leader>sa', ':w <CR>',     desc = 'Save' },
-    { '<BS>',       cmd 'e #',     desc = 'Previous Buffer' },
-    { 'g>',         '<C-a>',       desc = 'Increment' },
-    { 'g<',         '<C-x>',       desc = 'Decrement' },
+    { '<leader>sa', ':w <CR>', desc = 'Save' },
+    { '<BS>', cmd 'e #', desc = 'Previous Buffer' },
+    { 'g>', '<C-a>', desc = 'Increment' },
+    { 'g<', '<C-x>', desc = 'Decrement' },
     { '<leader>ra', ':IncRename ', desc = 'Rename' },
-    { 'D',          '<C-d>zz' },
-    { 'U',          '<C-u>zz' },
+    { 'D', '<C-d>zz' },
+    { 'U', '<C-u>zz' },
 }
 
 ---@param map_table LazyKeys[]
@@ -26,7 +24,7 @@ local function register_mappings(map_table)
 
         local opts = {}
         for k, v in pairs(map) do
-            if type(k) == "string" and k ~= "mode" then
+            if type(k) == 'string' and k ~= 'mode' then
                 opts[k] = v
             end
         end
@@ -37,7 +35,8 @@ end
 
 register_mappings(mappings)
 
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+local highlight_group =
+    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank()

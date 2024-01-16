@@ -7,6 +7,25 @@ require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
 cmp.setup {
+    formatting = {
+        format = require('lspkind').cmp_format {
+            mode = 'symbol_text',
+            maxwidth = 50,
+            ellipsis_char = '...',
+            show_labelDetails = true,
+        },
+    },
+    window = {
+        completion = {
+            scrollbar = false,
+            border = 'rounded',
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,Search:None',
+        },
+        documentation = {
+            border = 'rounded',
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,Search:None',
+        },
+    },
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
