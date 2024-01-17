@@ -59,16 +59,18 @@ local function config()
     conform.setup(opts)
 end
 
-local function format()
-    require 'conform'.format()
-end
-
 ---@type LazySpec
 return {
     'stevearc/conform.nvim',
     config = config,
     ft = vim.tbl_keys(opts.formatters_by_ft),
     keys = {
-        { '<leader>fm', format, desc = 'Format' }
-    }
+        {
+            '<leader>fm',
+            function()
+                require('conform').format()
+            end,
+            desc = 'Format',
+        },
+    },
 }
