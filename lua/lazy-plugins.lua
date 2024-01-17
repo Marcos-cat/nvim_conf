@@ -1,5 +1,7 @@
 ---@type LazySpec[]
 require('lazy').setup({
+    { 'tpope/vim-surround', event = 'VeryLazy' },
+    { 'tpope/vim-repeat', event = 'VeryLazy' },
     {
         'norcalli/nvim-colorizer.lua',
         event = 'VeryLazy',
@@ -30,9 +32,19 @@ require('lazy').setup({
         'neovim/nvim-lspconfig',
         dependencies = {
             { 'williamboman/mason.nvim', config = true },
+            {
+                'stevearc/dressing.nvim',
+                opts = {
+                    input = {
+                        win_options = {
+                            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,Search:None',
+                        },
+                    },
+                },
+            },
+            'folke/neodev.nvim',
             'williamboman/mason-lspconfig.nvim',
             'neovim/nvim-lspconfig',
-            'folke/neodev.nvim',
         },
     },
     {
@@ -48,10 +60,11 @@ require('lazy').setup({
         },
     },
 
-    { 'folke/which-key.nvim', opts = {} },
+    { 'folke/which-key.nvim', opts = {}, event = 'VeryLazy' },
     {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
+        event = 'VeryLazy',
         opts = {
             -- See `:help gitsigns.txt`
             signs = {
@@ -63,26 +76,16 @@ require('lazy').setup({
             },
         },
     },
-    {
-        'nvim-lualine/lualine.nvim',
-        opts = {
-            options = {
-                icons_enabled = true,
-                theme = 'catppuccin-mocha',
-                component_separators = '|',
-                section_separators = '',
-            },
-        },
-    },
 
     {
         'lukas-reineke/indent-blankline.nvim',
         name = 'ibl',
+        event = 'VeryLazy',
         ---@type ibl.config
         opts = {
             indent = { char = '│' },
             scope = {
-                show_start = false,
+                enabled = false,
             },
         },
     },
@@ -90,6 +93,7 @@ require('lazy').setup({
     {
         'numToStr/Comment.nvim',
         opts = {},
+        event = 'VeryLazy',
     },
 
     {
@@ -115,4 +119,4 @@ require('lazy').setup({
     },
 
     { import = 'plugins' },
-}, {})
+}, { defaults = { lazy = true } })

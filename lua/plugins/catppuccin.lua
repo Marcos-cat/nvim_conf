@@ -3,6 +3,7 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
+    lazy = false,
     ---@type CatppuccinOptions
     opts = {
         flavour = 'mocha',

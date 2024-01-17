@@ -4,7 +4,7 @@ end
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
----@alias MapModes 'c'|'x'|'v'|'n'|'i'
+---@alias MapModes 'c'|'x'|'v'|'n'|'i'|'t'
 
 ---@class CustomMapping
 ---@field [1] string
@@ -31,6 +31,7 @@ local mappings = {
     { 'y', '""y', mode = { 'v', 'x', 'n' } },
     { 'y', '""y', mode = { 'v', 'x', 'n' } },
 
+    { '<Esc>', [[<C-\><C-n>]], mode = { 't' }, desc = 'Exit terminal mode' },
     { 'y', '""y', mode = { 'v', 'x', 'n' } },
     { '<leader>y', '"+y', mode = { 'v', 'x', 'n' } },
 }

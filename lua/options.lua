@@ -9,6 +9,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- Open vertical splits to the right
+vim.o.splitright = true
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
