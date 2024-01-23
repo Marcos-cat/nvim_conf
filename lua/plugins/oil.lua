@@ -1,6 +1,12 @@
 local opts = {
     keymaps = { ['q'] = 'actions.close' },
-    float = { max_width = 100, max_height = 30 },
+    float = {
+        max_width = 50,
+        max_height = 20,
+        win_options = {
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,FloatTitle:Normal',
+        },
+    },
     delete_to_trash = true,
 }
 
@@ -12,9 +18,7 @@ return {
     keys = {
         {
             '-',
-            function()
-                require('oil').open_float()
-            end,
+            function() require('oil').open_float() end,
             desc = 'Oil',
         },
     },
