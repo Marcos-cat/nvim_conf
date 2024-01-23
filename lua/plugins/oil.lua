@@ -1,5 +1,5 @@
 local opts = {
-    keymaps = { ['q'] = 'actions.close' },
+    keymaps = { ['<leader>q'] = 'actions.close' },
     float = {
         max_width = 50,
         max_height = 20,
