@@ -25,7 +25,7 @@ local opts = {
         go = { '', color.sapphire },
         sh = { '', color.overlay0 },
         py = { '󰌠', color.sky },
-        md = { '󰍔', color.red },
+        md = { '', color.red },
         txt = { '󰈙', color.text },
         [{ 'ml', 'mli' }] = { '', color.yellow },
     },
