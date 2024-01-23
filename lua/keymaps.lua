@@ -1,6 +1,4 @@
-local function cmd(s)
-    return '<cmd> ' .. s .. ' <CR>'
-end
+local function cmd(s) return '<cmd> ' .. s .. ' <CR>' end
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
@@ -34,6 +32,8 @@ local mappings = {
     { '<Esc>', [[<C-\><C-n>]], mode = { 't' }, desc = 'Exit terminal mode' },
     { 'y', '""y', mode = { 'v', 'x', 'n' } },
     { '<leader>y', '"+y', mode = { 'v', 'x', 'n' } },
+
+    { '<C-c>', 'mzgg"+yG`z', 'Copy the file to clipboard' },
 }
 
 ---@param map_table CustomMapping[]
@@ -45,9 +45,7 @@ local function register_mappings(map_table)
 
         local opts = {}
         for k, v in pairs(map) do
-            if type(k) == 'string' and k ~= 'mode' then
-                opts[k] = v
-            end
+            if type(k) == 'string' and k ~= 'mode' then opts[k] = v end
         end
 
         vim.keymap.set(mode, lhs, rhs, opts)
@@ -59,9 +57,7 @@ register_mappings(mappings)
 local highlight_group =
     vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+    callback = function() vim.highlight.on_yank() end,
     group = highlight_group,
     pattern = '*',
 })

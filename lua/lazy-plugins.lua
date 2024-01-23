@@ -14,9 +14,7 @@ require('lazy').setup({
         keys = {
             {
                 '<leader>q',
-                function()
-                    require('trouble').open()
-                end,
+                function() require('trouble').open() end,
                 'Trouble',
             },
         },
@@ -24,9 +22,7 @@ require('lazy').setup({
     {
         'onsails/lspkind.nvim',
         opts = {},
-        config = function(_, opts)
-            require('lspkind').init(opts)
-        end,
+        config = function(_, opts) require('lspkind').init(opts) end,
     },
     {
         'neovim/nvim-lspconfig',
@@ -103,9 +99,7 @@ require('lazy').setup({
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'make',
-                cond = function()
-                    return vim.fn.executable 'make' == 1
-                end,
+                cond = function() return vim.fn.executable 'make' == 1 end,
             },
         },
     },
