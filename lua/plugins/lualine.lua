@@ -1,40 +1,14 @@
-local api = vim.api
-
-local macro = {
-    recording = false,
-    register = nil,
-}
-
-function macro.display()
-    if not macro.recording then return '' end
-    return '@' .. macro.register
-end
-
-local group = api.nvim_create_augroup('MacroLualine', { clear = true })
-
-api.nvim_create_autocmd('RecordingEnter', {
-    callback = function()
-        macro.recording = true
-        macro.register = tostring(vim.fn.reg_recording())
-        require('lualine').refresh()
-    end,
-    group = group,
-})
-
-api.nvim_create_autocmd('RecordingLeave', {
-    callback = function()
-        macro.recording = false
-        macro.register = nil
-        require('lualine').refresh()
-    end,
-    group = group,
-})
-
 local path = {
     name = 0,
     relative = 1,
     absolute = 2,
 }
+
+local function macro_display()
+    local reg = vim.fn.reg_recording()
+    if reg == '' then return '' end
+    return '@' .. reg
+end
 
 return {
     'nvim-lualine/lualine.nvim',
@@ -47,7 +21,7 @@ return {
             section_separators = '',
         },
         sections = {
-            lualine_a = { { 'mode' }, { macro.display } },
+            lualine_a = { { 'mode' }, { macro_display } },
             lualine_b = { { 'branch', icon = '' }, 'diff' },
             lualine_c = { 'diagnostics' },
 

@@ -2,11 +2,6 @@
 require('lazy').setup({
     { 'tpope/vim-surround', event = 'VeryLazy' },
     { 'tpope/vim-repeat', event = 'VeryLazy' },
-    {
-        'norcalli/nvim-colorizer.lua',
-        event = 'VeryLazy',
-        opts = { ['*'] = { names = false, RGB = false } },
-    },
     { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
     {
         'folke/trouble.nvim',
