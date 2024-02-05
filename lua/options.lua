@@ -4,6 +4,8 @@ vim.api.nvim_create_autocmd('VimEnter', {
     end,
 })
 
+vim.filetype.add { extension = { ua = 'uiua' } }
+
 vim.o.ignorecase = true
 vim.o.smartcase = true
 

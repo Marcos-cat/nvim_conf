@@ -6,7 +6,10 @@ local fmt = require('luasnip.extras.fmt').fmt
 
 local snippets = {
     lua = {
-        s('--t', fmt([[---@type {}]], i(0))),
+        s('--t', fmt('---@type {}', i(0))),
+    },
+    [{ 'javascript', 'typescript', 'svelte' }] = {
+        s('ty', fmt('/** @type {{{}}} */', i(0))),
     },
 }
 

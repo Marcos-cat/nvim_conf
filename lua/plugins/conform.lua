@@ -3,7 +3,6 @@ local path = '/home/marcospotato/.config/'
 local opts = {
     formatters_by_ft = {
         lua = { 'stylua' },
-        rust = { 'rustfmt' },
         python = { 'black' },
         go = { 'gofmt' },
         templ = { 'templ' },
@@ -28,7 +27,12 @@ local opts = {
     formatters = {
         svelteprettier = {
             command = 'prettier',
-            args = { '--stdin-filepath', '$FILENAME' },
+            args = {
+                '--config',
+                path .. 'prettier/.prettierrcsvelte',
+                '--stdin-filepath',
+                '$FILENAME',
+            },
             range_args = function(ctx)
                 local start_offset, end_offset =
                     require('conform.util').get_offsets_from_range(
@@ -64,7 +68,7 @@ return {
     keys = {
         {
             '<leader>fm',
-            function() require('conform').format() end,
+            function() require('conform').format { lsp_fallback = true } end,
             desc = 'Format',
         },
     },

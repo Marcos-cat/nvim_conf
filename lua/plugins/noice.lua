@@ -48,4 +48,5 @@ return {
             },
         },
     },
+    keys = { { '<leader>dm', '<cmd> NoiceDismiss <CR>', 'Noice Dismiss' } },
 }

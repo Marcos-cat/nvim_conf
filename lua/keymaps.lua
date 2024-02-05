@@ -13,6 +13,10 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 ---@type CustomMapping[]
 local mappings = {
+    { 'j', 'gj' },
+    { 'k', 'gk' },
+    { 'gj', 'j' },
+    { 'gk', 'k' },
     { '<leader>sa', ':w <CR>', desc = 'Save' },
     { '<BS>', cmd 'e #', desc = 'Previous Buffer' },
     { 'g>', '<C-a>', desc = 'Increment' },

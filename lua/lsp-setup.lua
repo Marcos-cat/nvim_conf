@@ -46,12 +46,6 @@ local servers = {
 
     clangd = { filetypes = { 'c', 'cpp' } },
 
-    rust_analyzer = {
-        cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
-        filetypes = { 'rust' },
-        ['rust-analyzer'] = { cargo = { allFeatures = true } },
-    },
-
     ltex = {
         autostart = false,
         ltex = {
@@ -77,6 +71,15 @@ local servers = {
     },
 }
 
+local custom_servers = {
+    uiua = {},
+    rust_analyzer = {
+        cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
+        filetypes = { 'rust' },
+        ['rust-analyzer'] = { cargo = { allFeatures = true } },
+    },
+}
+
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -87,20 +90,24 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
-mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers),
-}
+mason_lspconfig.setup { ensure_installed = vim.tbl_keys(servers) }
+
+local function lspconfig_setup(server_list, server_name)
+    require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = server_list[server_name],
+        cmd = (server_list[server_name] or {}).cmd,
+        root_dir = (server_list[server_name] or {}).root_dir,
+        filetypes = (server_list[server_name] or {}).filetypes,
+        autostart = (server_list[server_name] or {}).autostart,
+    }
+end
 
 mason_lspconfig.setup_handlers {
-    function(server_name)
-        require('lspconfig')[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-            cmd = (servers[server_name] or {}).cmd,
-            root_dir = (servers[server_name] or {}).root_dir,
-            filetypes = (servers[server_name] or {}).filetypes,
-            autostart = (servers[server_name] or {}).autostart,
-        }
-    end,
+    function(server_name) lspconfig_setup(servers, server_name) end,
 }
+
+for server_name, _ in pairs(custom_servers) do
+    lspconfig_setup(custom_servers, server_name)
+end
