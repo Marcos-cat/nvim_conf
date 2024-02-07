@@ -18,6 +18,7 @@ local opts = {
         toml = { '', color.green },
         lock = { '', color.red },
         ts = { '', color.teal },
+        vim = { '', color.green },
         ['d.ts'] = { '', color.green },
         js = { '', color.yellow },
         css = { '', color.blue },
