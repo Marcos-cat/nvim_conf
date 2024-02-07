@@ -5,9 +5,7 @@ return {
     priority = 1000,
     lazy = false,
     ---@type CatppuccinOptions
-    opts = {
-        flavour = 'mocha',
-    },
+    opts = { flavour = 'mocha' },
     config = function(_, opts)
         require('catppuccin').setup(opts)
         vim.cmd.colorscheme 'catppuccin-mocha'
