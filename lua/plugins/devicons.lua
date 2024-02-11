@@ -1,13 +1,13 @@
 local color = require 'catppuccin.palettes.mocha'
 
----@class IconTable
+---@class IconInfo
 ---@field [1] string
 ---@field [2] string
 
 ---@class DeviconOpts
 ---@field strict boolean
----@field override_by_extension table<string|string[], IconTable>
----@field override_by_filename table<string|string[], IconTable>
+---@field override_by_extension table<string|string[], IconInfo>
+---@field override_by_filename table<string|string[], IconInfo>
 local opts = {
     strict = true,
     override_by_extension = {
@@ -36,26 +36,29 @@ local opts = {
     },
 }
 
----@param name string
----@param v IconTable
-local function to_table(name, v)
+---@param filetype string
+---@param icon_info IconInfo
+local function to_devicon_table(filetype, icon_info)
     return {
-        icon = v[1],
-        color = v[2],
-        name = name,
+        icon = icon_info[1],
+        color = icon_info[2],
+        name = filetype,
     }
 end
 
-for _, t in ipairs { opts.override_by_extension, opts.override_by_filename } do
-    for key, v in pairs(t) do
-        if type(key) == 'table' then
-            for _, name in ipairs(key) do
-                t[name] = to_table(name, v)
+for _, overrides in ipairs {
+    opts.override_by_extension,
+    opts.override_by_filename,
+} do
+    for filetype, icon_info in pairs(overrides) do
+        if type(filetype) == 'table' then
+            for _, ft in ipairs(filetype) do
+                overrides[ft] = to_devicon_table(ft, icon_info)
             end
 
-            t[key] = nil
+            overrides[filetype] = nil
         else
-            t[key] = to_table(key, v)
+            overrides[filetype] = to_devicon_table(filetype, icon_info)
         end
     end
 end
