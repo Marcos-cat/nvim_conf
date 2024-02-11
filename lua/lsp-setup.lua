@@ -1,11 +1,9 @@
-local register_mappings = require('keymaps').register_mappings
 local tb = require 'telescope.builtin'
 local lsp = vim.lsp.buf
 
 local on_attach = function(_, bufnr)
     ---@type CustomMapping[]
     local mappings = {
-        -- { '<leader>ra', lsp.rename, desc = 'Rename' }, -- [[ Uses IncRename instead ]]
         { '<leader>ca', lsp.code_action, desc = 'Code Action' },
         { 'gd', tb.lsp_definitions, desc = 'Goto Definition' },
         { 'gr', tb.lsp_references, desc = 'Goto References' },
@@ -21,7 +19,7 @@ local on_attach = function(_, bufnr)
         map.buffer = bufnr
     end
 
-    register_mappings(mappings)
+    require('keymaps').register_mappings(mappings)
 end
 
 -- mason-lspconfig requires that these setup functions are called in this order
@@ -43,6 +41,7 @@ local servers = {
     templ = {},
     gopls = {},
     pyright = {},
+    nil_ls = {},
 
     clangd = { filetypes = { 'c', 'cpp' } },
 
