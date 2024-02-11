@@ -1,9 +1,12 @@
-local tb = require 'telescope.builtin'
-
-local register_mappings = require('keymaps').register_mappings
-
 require('telescope').setup {
     defaults = {
+        layout_strategy = 'horizontal',
+        layout_config = {
+            height = 0.95,
+            preview_cutoff = 80,
+            width = 0.9,
+        },
+        prompt_prefix = '   ',
         mappings = {
             i = {
                 ['<C-u>'] = false,
@@ -13,14 +16,23 @@ require('telescope').setup {
     },
 }
 
+require('highlights').register_hl { TelescopePromptPrefix = { fg = 'red' } }
+
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
+local tb = require 'telescope.builtin'
+
 ---@type CustomMapping[]
 local mappings = {
-    { '<leader>ff', tb.find_files, desc = 'Search Files' },
-    { '<leader>fh', tb.help_tags, desc = 'Search Help' },
+    { '<leader>ff', tb.find_files, desc = 'Find Files' },
+    {
+        '<leader>fa',
+        function() tb.find_files { hidden = true } end,
+        desc = 'Find All Files',
+    },
+    { '<leader>fh', tb.help_tags, desc = 'Find Help' },
     { '<leader>fw', tb.live_grep, desc = 'Find Words' },
 }
 
-register_mappings(mappings)
+require('keymaps').register_mappings(mappings)
