@@ -1,5 +1,10 @@
 ---@type LazySpec[]
 require('lazy').setup({
+    {
+        'mbbill/undotree',
+        cmd = 'UndotreeToggle',
+        keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', 'Undotree' } },
+    },
     { 'tpope/vim-surround', event = 'VeryLazy' },
     { 'tpope/vim-repeat', event = 'VeryLazy' },
     { 'windwp/nvim-autopairs', event = 'InsertEnter', opts = {} },
@@ -73,12 +78,7 @@ require('lazy').setup({
         name = 'ibl',
         event = 'VeryLazy',
         ---@type ibl.config
-        opts = {
-            indent = { char = '│' },
-            scope = {
-                enabled = false,
-            },
-        },
+        opts = { indent = { char = '│' }, scope = { enabled = false } },
     },
 
     {
@@ -91,6 +91,7 @@ require('lazy').setup({
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons',
             {
                 'nvim-telescope/telescope-fzf-native.nvim',
                 build = 'make',
@@ -101,9 +102,7 @@ require('lazy').setup({
 
     {
         'nvim-treesitter/nvim-treesitter',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-        },
+        dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
         build = ':TSUpdate',
     },
 
