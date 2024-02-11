@@ -4,10 +4,19 @@ vim.api.nvim_create_autocmd('VimEnter', {
     end,
 })
 
+local yank_group =
+    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function() vim.highlight.on_yank() end,
+    group = yank_group,
+    pattern = '*',
+})
+
 vim.filetype.add { extension = { ua = 'uiua' } }
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.foldmethod = 'manual'
 
 -- Open vertical splits to the right
 vim.o.splitright = true
@@ -21,9 +30,6 @@ vim.o.termguicolors = true
 vim.g.vim_markdown_frontmatter = 1
 vim.g.rustfmt_autosave = 1
 
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
 vim.opt.sidescroll = 0
 
 vim.opt.nu = true
