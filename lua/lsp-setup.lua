@@ -11,7 +11,7 @@ local on_attach = function(_, bufnr)
         { '<leader>D', tb.lsp_type_definitions, desc = 'Type Definition' },
         { '<leader>ds', tb.lsp_document_symbols, desc = 'Document Symbols' },
         { 'K', lsp.hover, 'Hover Documentation' },
-        { '<C-k>', lsp.signature_help, desc = 'Signature Documentation' },
+        { '<C-S-k>', lsp.signature_help, desc = 'Signature Documentation' },
         { 'gD', lsp.declaration, desc = 'Goto Declaration' },
     }
 
