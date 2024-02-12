@@ -64,4 +64,4 @@ for _, overrides in ipairs {
 end
 
 ---@type LazySpec
-return { 'nvim-tree/nvim-web-devicons', opts = opts }
+return { lazy = false, 'nvim-tree/nvim-web-devicons', opts = opts }
