@@ -38,7 +38,6 @@ vim.defer_fn(function()
                     ['af'] = '@function.outer',
                     ['if'] = '@function.inner',
                     ['ac'] = '@comment.outer',
-                    ['ic'] = '@comment.inner',
                 },
             },
             move = {

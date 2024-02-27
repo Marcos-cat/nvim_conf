@@ -5,9 +5,9 @@ return {
     'hiphish/rainbow-delimiters.nvim',
     event = 'BufEnter',
     opts = {
-        query = { [''] = 'rainbow-delimiters' },
-        highlight = { rd 'Red', rd 'Violet', rd 'Blue' },
-        blacklist = { 'html' },
+        query = { [''] = 'rainbow-delimiters', svelte = 'rainbow-delimiters' },
+        highlight = { rd 'Red', rd 'Violet', rd'Orange', rd 'Blue' },
+        -- blacklist = { 'html' },
     },
     config = function(_, opts) require('rainbow-delimiters.setup').setup(opts) end,
 }

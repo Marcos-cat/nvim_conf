@@ -71,7 +71,7 @@ local servers = {
 }
 
 local custom_servers = {
-    uiua = {},
+    uiua = { cmd = { 'uiua', 'lsp' }, filetypes = { 'uiua' } },
     rust_analyzer = {
         cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
         filetypes = { 'rust' },

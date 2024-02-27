@@ -28,6 +28,7 @@ local opts = {
         py = { '󰌠', color.sky },
         md = { '', color.red },
         txt = { '󰈙', color.text },
+        ua = { '󰕉', color.sapphire },
         [{ 'ml', 'mli' }] = { '', color.yellow },
     },
     override_by_filename = {

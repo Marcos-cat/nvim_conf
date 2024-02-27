@@ -24,3 +24,6 @@ require 'lsp-setup'
 
 -- [[ Configure nvim-cmp ]]
 require 'cmp-setup'
+
+-- [[ Set custom highlights ]]
+require 'highlights'
