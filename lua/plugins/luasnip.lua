@@ -11,6 +11,9 @@ local snippets = {
     [{ 'javascript', 'typescript', 'svelte' }] = {
         s('ty', fmt('/** @type {{{}}} */', i(0))),
     },
+    svelte = {
+        s('eft', fmt('$effect(() => {{{}}})', i(0)))
+    }
 }
 
 for fts, snip in pairs(snippets) do

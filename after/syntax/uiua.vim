@@ -1,4 +1,4 @@
-autocmd FileType uiua setlocal commentstring=#%s
+setlocal commentstring=#%s
 
 syn match uiuaComment '#.*$'
 hi link uiuaComment @comment
@@ -11,5 +11,5 @@ hi link @lsp.type.dyadic_modifier.uiua @keyword
 hi link @lsp.type.monadic_modifier.uiua @type
 hi link @lsp.type.uiua_string.uiua @constructor
 
-syn match uiuaBracket '[←()\[\]{}]'
+syn match uiuaBracket '[←()\[\]{}|⟨⟩]'
 hi link uiuaBracket @punctuation
