@@ -21,6 +21,31 @@ local function lsps_display()
     return table.concat(lsps, ' '):gsub('language_server', 'ls')
 end
 
+local function word_count()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    local content = table.concat(lines, ' ')
+    local _, words = content:gsub('%[[xX]%]', ' '):gsub('%a+', '')
+    return words
+end
+
+local function word_count_cond()
+    local ft = vim.bo.filetype
+    return ft == 'markdown' or ft == 'text'
+end
+
+---@param file string
+local function file_name_fmt(file)
+    local oil_dir = file:gsub('^oil://', ''):gsub('^o//', '')
+    if oil_dir == file then return file end
+
+    local cwd = vim.fn.getcwd()
+    local escaped_cwd = cwd:gsub('%W', '%%%0')
+    oil_dir = oil_dir:gsub('^' .. escaped_cwd .. '%/', '')
+
+    if oil_dir == '' then return cwd end
+    return oil_dir
+end
+
 local nvim_icon = {
     filled = '',
     unfilled = '',
@@ -39,11 +64,18 @@ return {
             lualine_a = {
                 { 'mode', icon = nvim_icon.unfilled },
                 { macro_display },
+                { word_count, cond = word_count_cond },
             },
             lualine_b = { { 'branch', icon = '' }, 'diff' },
             lualine_c = { 'diagnostics' },
 
-            lualine_x = { { 'filename', path = path.relative } },
+            lualine_x = {
+                {
+                    'filename',
+                    path = path.relative,
+                    fmt = file_name_fmt,
+                },
+            },
             lualine_y = { 'filetype', { lsps_display } },
             lualine_z = { 'progress' },
         },

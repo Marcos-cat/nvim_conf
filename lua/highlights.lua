@@ -44,7 +44,7 @@ end
 
 ---@type CustomHighlights
 local highlights = {
-    SpellBad = { fg = 'red', underline = true },
+    SpellBad = { underline = true },
     LineNr = { fg = 'blue', bold = true },
     ColorColumn = { bg = 'surface0' },
     [{ 'LineNrAbove', 'LineNrBelow' }] = { fg = 'surface2' },
