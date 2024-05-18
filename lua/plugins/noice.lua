@@ -32,21 +32,29 @@ local noice_opts = {
 
 ---@type LazySpec
 return {
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    opts = noice_opts,
-    dependencies = {
-        'MunifTanjim/nui.nvim',
-        { 'smjonas/inc-rename.nvim', opts = {} },
-        {
-            'rcarriga/nvim-notify',
-            opts = {
-                render = 'compact',
-                stages = 'fade',
-                timeout = 2000,
-                fps = 60,
+    {
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        opts = noice_opts,
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            {
+                'rcarriga/nvim-notify',
+                opts = {
+                    render = 'compact',
+                    stages = 'fade',
+                    timeout = 2000,
+                    fps = 60,
+                },
             },
         },
+        keys = { { '<leader>dm', '<cmd> NoiceDismiss <CR>', 'Noice Dismiss' } },
     },
-    keys = { { '<leader>dm', '<cmd> NoiceDismiss <CR>', 'Noice Dismiss' } },
+    {
+        'smjonas/inc-rename.nvim',
+        keys = { { '<leader>ra', ':IncRename ', desc = 'Rename' } },
+        cmd = 'IncRename',
+        dependencies = { 'folke/noice.nvim' },
+        opts = {},
+    },
 }

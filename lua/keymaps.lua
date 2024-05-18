@@ -2,13 +2,13 @@ local function cmd(s) return '<cmd> ' .. s .. ' <CR>' end
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
----@alias MapModes 'c'|'x'|'v'|'n'|'i'|'t'
+---@alias MapMode 'c'|'x'|'v'|'n'|'i'|'t'
 
 ---@class CustomMapping
 ---@field [1] string
 ---@field [2] string|function
 ---@field desc? string
----@field mode? MapModes|MapModes[]
+---@field mode? MapMode|MapMode[]
 ---@field buffer? integer
 
 ---@type CustomMapping[]
@@ -17,11 +17,7 @@ local mappings = {
     { 'k', 'gk' },
     { 'gj', 'j' },
     { 'gk', 'k' },
-    { '<leader>sa', ':w <CR>', desc = 'Save' },
     { '<BS>', cmd 'e #', desc = 'Previous Buffer' },
-    { 'g.', '<C-a>', desc = 'Increment' },
-    { 'g,', '<C-x>', desc = 'Decrement' },
-    { '<leader>ra', ':IncRename ', desc = 'Rename' },
     { 'D', '<C-d>zz' },
     { 'U', '<C-u>zz' },
     { 'J', 'mzJ`z' },
@@ -29,16 +25,18 @@ local mappings = {
     -- [[ Copy/Paste ]]
 
     { 'p', '""p', mode = { 'v', 'x', 'n' } },
-    { '<leader>p', '"+p""', mode = { 'v', 'x', 'n' } },
-    { 'y', '""y', mode = { 'v', 'x', 'n' } },
     { 'y', '""y', mode = { 'v', 'x', 'n' } },
 
+    { 'gp', '"+p', mode = { 'v', 'x', 'n' } },
+    { 'gy', '"+y', mode = { 'v', 'x', 'n' } },
+
     { '<Esc>', [[<C-\><C-n>]], mode = { 't' }, desc = 'Exit terminal mode' },
-    { 'y', '""y', mode = { 'v', 'x', 'n' } },
-    { '<leader>y', '"+y', mode = { 'v', 'x', 'n' } },
 
     { '<C-c>', 'mzgg"+yG`z', 'Copy the file to clipboard' },
 }
+
+vim.api.nvim_create_user_command('Q', 'q', {})
+vim.api.nvim_create_user_command('W', 'w', {})
 
 ---@param map_table CustomMapping[]
 local function register_mappings(map_table)

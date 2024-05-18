@@ -4,11 +4,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
     end,
 })
 
-local yank_group =
-    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
-    group = yank_group,
+    group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
     pattern = '*',
 })
 
@@ -24,13 +22,12 @@ vim.o.splitright = true
 -- Set `completeopt` to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
--- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
 vim.opt.sidescroll = 0
 
-vim.opt.nu = true
-vim.opt.relativenumber = true
+vim.o.nu = true
+vim.o.relativenumber = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

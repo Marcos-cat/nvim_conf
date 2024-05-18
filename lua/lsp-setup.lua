@@ -4,13 +4,12 @@ local lsp = vim.lsp.buf
 local on_attach = function(_, bufnr)
     ---@type CustomMapping[]
     local mappings = {
-        { '<leader>ca', lsp.code_action, desc = 'Code Action' },
+        { 'crr', lsp.code_action, desc = 'Code Actions' },
         { 'gd', tb.lsp_definitions, desc = 'Goto Definition' },
         { 'gr', tb.lsp_references, desc = 'Goto References' },
         { 'gI', tb.lsp_implementations, desc = 'Goto Implementation' },
         { '<leader>D', tb.lsp_type_definitions, desc = 'Type Definition' },
         { '<leader>ds', tb.lsp_document_symbols, desc = 'Document Symbols' },
-        { 'K', lsp.hover, 'Hover Documentation' },
         { '<C-S-k>', lsp.signature_help, desc = 'Signature Documentation' },
         { 'gD', lsp.declaration, desc = 'Goto Declaration' },
     }
@@ -55,7 +54,7 @@ local servers = {
     },
 
     jsonls = {
-        -- TODO schema store stuff
+        -- TODO: schema store stuff
         filetypes = { 'json', 'jsonc' },
     },
 

@@ -7,21 +7,8 @@ return {
         float = { max_width = 50, max_height = 20 },
         delete_to_trash = true,
     },
-    dependencies = {
-        'nvim-tree/nvim-web-devicons',
-        {
-            'chrishrb/gx.nvim',
-            opts = {},
-            keys = { { 'gx', '<cmd>Browse<CR>', mode = { 'n', 'x' } } },
-            dependencies = { 'nvim-lua/plenary.nvim' },
-            submodules = false,
-        },
-    },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-        {
-            '-',
-            function() require('oil').open_float() end,
-            desc = 'Oil',
-        },
+        { '-', function() require('oil').open_float() end, desc = 'Oil' },
     },
 }

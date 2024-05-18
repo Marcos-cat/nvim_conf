@@ -13,8 +13,8 @@ return {
     },
     {
         'folke/todo-comments.nvim',
-        event = 'VimEnter',
-        dependencies = { 'folke/trouble.nvim', 'nvim-lua/plenary.nvim' },
+        event = 'BufEnter',
+        dependencies = { 'nvim-lua/plenary.nvim' },
         ---@type TodoConfig
         opts = {},
         keys = {

@@ -69,13 +69,6 @@ require('lazy').setup({
         ---@type ibl.config
         opts = { indent = { char = '│' }, scope = { enabled = false } },
     },
-
-    {
-        'numToStr/Comment.nvim',
-        opts = {},
-        event = 'VeryLazy',
-    },
-
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
