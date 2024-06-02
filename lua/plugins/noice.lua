@@ -1,3 +1,4 @@
+---@module "noice"
 ---@type NoiceConfig
 local noice_opts = {
     lsp = {

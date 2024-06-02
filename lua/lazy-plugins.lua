@@ -27,7 +27,11 @@ require('lazy').setup({
                     },
                 },
             },
-            'folke/neodev.nvim',
+            {
+                'folke/lazydev.nvim',
+                ft = 'lua', -- only load on lua files
+                opts = { library = { 'lazy.nvim' } },
+            },
             'williamboman/mason-lspconfig.nvim',
             'neovim/nvim-lspconfig',
         },
@@ -66,7 +70,6 @@ require('lazy').setup({
         'lukas-reineke/indent-blankline.nvim',
         name = 'ibl',
         event = 'VeryLazy',
-        ---@type ibl.config
         opts = { indent = { char = '│' }, scope = { enabled = false } },
     },
     {

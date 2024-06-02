@@ -4,6 +4,7 @@ return {
     name = 'catppuccin',
     priority = 1000,
     lazy = false,
+    ---@module "catppuccin"
     ---@type CatppuccinOptions
     opts = { flavour = 'mocha' },
     config = function(_, opts)
