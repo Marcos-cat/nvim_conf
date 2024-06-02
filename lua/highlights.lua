@@ -1,7 +1,5 @@
 ---@alias CustomHighlights table<string|string[], vim.api.keyset.highlight>
 
-local set_hl = vim.api.nvim_set_hl
-
 local colors = require 'catppuccin.palettes.mocha'
 
 ---@param hls CustomHighlights
@@ -12,10 +10,10 @@ local register_hl = function(hls)
 
         if type(hlgroups) == 'table' then
             for _, hlgroup in ipairs(hlgroups) do
-                set_hl(0, hlgroup, opts)
+                vim.api.nvim_set_hl(0, hlgroup, opts)
             end
         else
-            set_hl(0, hlgroups, opts)
+            vim.api.nvim_set_hl(0, hlgroups, opts)
         end
     end
 end
@@ -27,6 +25,21 @@ local highlights = {
     ColorColumn = { bg = 'surface0' },
     [{ 'LineNrAbove', 'LineNrBelow' }] = { fg = 'surface2' },
 }
+
+local function modify(name, opts)
+    vim.api.nvim_set_hl(
+        0,
+        name,
+        vim.tbl_extend('keep', opts, vim.api.nvim_get_hl(0, { name = name }))
+    )
+end
+
+for _, name in ipairs { 'Error', 'Warn', 'Info', 'Hint' } do
+    modify('DiagnosticVirtualText' .. name, { italic = false })
+end
+
+modify('Conditional', { italic = false })
+modify('Type', { italic = true })
 
 register_hl(highlights)
 
