@@ -1,10 +1,16 @@
 local tb = require 'telescope.builtin'
 local lsp = vim.lsp.buf
-
 local on_attach = function(_, bufnr)
     ---@type CustomMapping[]
     local mappings = {
         { 'crr', lsp.code_action, desc = 'Code Actions' },
+        {
+            'gh',
+            function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end,
+            desc = 'Toggle Inlay Hints',
+        },
         { 'gd', tb.lsp_definitions, desc = 'Goto Definition' },
         { 'gr', tb.lsp_references, desc = 'Goto References' },
         { 'gI', tb.lsp_implementations, desc = 'Goto Implementation' },
@@ -35,7 +41,32 @@ local servers = {
     taplo = {},
     htmx = {},
     vimls = {},
-    tsserver = {},
+    tsserver = {
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+    },
     html = {},
     templ = {},
     gopls = {},
@@ -77,9 +108,6 @@ local custom_servers = {
         ['rust-analyzer'] = { cargo = { allFeatures = true } },
     },
 }
-
--- Setup neovim lua configuration
-require('neodev').setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
