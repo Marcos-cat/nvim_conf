@@ -11,10 +11,10 @@ local function macro_display()
 end
 
 local function lsps_display()
-    local lsps = vim.lsp.get_active_clients { bufnr = 0 }
-    for i, lsp in ipairs(lsps) do
-        lsps[i] = lsp.name
-    end
+    local lsps = vim.tbl_map(
+        function(lsp) return lsp.name end,
+        vim.lsp.get_clients()
+    )
 
     if #lsps == 0 then return '' end
 
