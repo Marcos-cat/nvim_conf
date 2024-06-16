@@ -20,10 +20,9 @@ end
 
 ---@type CustomHighlights
 local highlights = {
-    SpellBad = { underline = true },
     LineNr = { fg = 'blue', bold = true },
-    ColorColumn = { bg = 'surface0' },
-    [{ 'LineNrAbove', 'LineNrBelow' }] = { fg = 'surface2' },
+    ColorColumn = { link = 'CursorLine' },
+    [{ 'LineNrAbove', 'LineNrBelow' }] = { fg = 'surface1', italic = true },
 }
 
 local function modify(name, opts)
