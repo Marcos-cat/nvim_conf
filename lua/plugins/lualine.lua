@@ -4,6 +4,11 @@ local path = {
     absolute = 2,
 }
 
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+    callback = function() require('lualine').refresh { trigger = 'autocmd' } end,
+    group = vim.api.nvim_create_augroup('MacroDisplay', { clear = true }),
+})
+
 local function macro_display()
     local reg = vim.fn.reg_recording()
     if reg == '' then return '' end
@@ -11,10 +16,12 @@ local function macro_display()
 end
 
 local function lsps_display()
-    local lsps = vim.tbl_map(
-        function(lsp) return lsp.name end,
-        vim.lsp.get_clients()
-    )
+    local lsps = {} ---@type string[]
+    for _, lsp in ipairs(vim.lsp.get_clients()) do
+        if lsp.attached_buffers[vim.api.nvim_get_current_buf()] then
+            lsps[#lsps + 1] = lsp.name
+        end
+    end
 
     if #lsps == 0 then return '' end
 
