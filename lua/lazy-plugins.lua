@@ -92,4 +92,4 @@ require('lazy').setup({
     },
 
     { import = 'plugins' },
-}, { defaults = { lazy = true } })
+}, { change_detection = { notify = false }, defaults = { lazy = true } })
