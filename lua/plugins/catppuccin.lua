@@ -6,7 +6,11 @@ return {
     lazy = false,
     ---@module "catppuccin"
     ---@type CatppuccinOptions
-    opts = { flavour = 'mocha' },
+    opts = {
+        flavour = 'mocha',
+        kitty = true,
+        integrations = { notify = true, noice = true, telescope = true },
+    },
     config = function(_, opts)
         require('catppuccin').setup(opts)
         vim.cmd.colorscheme 'catppuccin-mocha'
