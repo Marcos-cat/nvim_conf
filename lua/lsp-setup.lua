@@ -7,7 +7,7 @@ local on_attach = function(_, bufnr)
         {
             'gh',
             function()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
             end,
             desc = 'Toggle Inlay Hints',
         },
@@ -96,6 +96,11 @@ local servers = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
             diagnostics = { disable = { 'missing-fields' } },
+            hint = {
+                enable = true,
+                arrayIndex = 'Disable',
+            },
+            hover = { enumsLimit = 20 },
         },
     },
 }
