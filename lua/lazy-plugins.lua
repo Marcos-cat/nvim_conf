@@ -1,5 +1,6 @@
 ---@type LazySpec[]
 require('lazy').setup({
+    { 'b0o/schemastore.nvim' },
     {
         'mbbill/undotree',
         cmd = 'UndotreeToggle',
@@ -33,7 +34,6 @@ require('lazy').setup({
                 opts = { library = { 'lazy.nvim' } },
             },
             'williamboman/mason-lspconfig.nvim',
-            'neovim/nvim-lspconfig',
         },
     },
     {

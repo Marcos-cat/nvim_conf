@@ -1,6 +1,8 @@
 local tb = require 'telescope.builtin'
 local lsp = vim.lsp.buf
-local on_attach = function(_, bufnr)
+
+local on_attach = function(args)
+    local bufnr = args.buf
     ---@type CustomMapping[]
     local mappings = {
         { 'crr', lsp.code_action, desc = 'Code Actions' },
@@ -27,10 +29,31 @@ local on_attach = function(_, bufnr)
     require('keymaps').register_mappings(mappings)
 end
 
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = on_attach,
+    group = vim.api.nvim_create_augroup(
+        'lspconfig-lsp-attach',
+        { clear = true }
+    ),
+})
+
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
 require('mason').setup()
 require('mason-lspconfig').setup()
+
+local tsserver_opts = {
+    inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+    },
+}
 
 local servers = {
     bashls = {},
@@ -41,32 +64,7 @@ local servers = {
     taplo = {},
     htmx = {},
     vimls = {},
-    tsserver = {
-        typescript = {
-            inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-            },
-        },
-        javascript = {
-            inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-            },
-        },
-    },
+    tsserver = { typescript = tsserver_opts, javascript = tsserver_opts },
     html = {},
     templ = {},
     gopls = {},
@@ -86,6 +84,10 @@ local servers = {
 
     jsonls = {
         -- TODO: schema store stuff
+        json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+        },
         filetypes = { 'json', 'jsonc' },
     },
 
@@ -106,7 +108,7 @@ local servers = {
 }
 
 local custom_servers = {
-    uiua = { cmd = { 'uiua', 'lsp' }, filetypes = { 'uiua' } },
+    uiua = {},
     rust_analyzer = {
         cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
         filetypes = { 'rust' },
@@ -121,24 +123,24 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
-mason_lspconfig.setup { ensure_installed = vim.tbl_keys(servers) }
-
-local function lspconfig_setup(server_list, server_name)
-    require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = server_list[server_name],
-        cmd = (server_list[server_name] or {}).cmd,
-        root_dir = (server_list[server_name] or {}).root_dir,
-        filetypes = (server_list[server_name] or {}).filetypes,
-        autostart = (server_list[server_name] or {}).autostart,
-    }
+local function lspconfig_setup(server_list)
+    return function(server_name)
+        local config = server_list[server_name] or {}
+        require('lspconfig')[server_name].setup {
+            capabilities = capabilities,
+            settings = config,
+            cmd = config.cmd,
+            root_dir = config.root_dir,
+            filetypes = config.filetypes,
+            autostart = config.autostart,
+        }
+    end
 end
 
-mason_lspconfig.setup_handlers {
-    function(server_name) lspconfig_setup(servers, server_name) end,
-}
+mason_lspconfig.setup_handlers { lspconfig_setup(servers) }
+
+local custom_setup = lspconfig_setup(custom_servers)
 
 for server_name, _ in pairs(custom_servers) do
-    lspconfig_setup(custom_servers, server_name)
+    custom_setup(server_name)
 end
