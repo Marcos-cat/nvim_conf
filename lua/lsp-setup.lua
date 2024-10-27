@@ -112,7 +112,10 @@ local custom_servers = {
     rust_analyzer = {
         cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
         filetypes = { 'rust' },
-        ['rust-analyzer'] = { cargo = { allFeatures = true } },
+        ['rust-analyzer'] = {
+            cargo = { allFeatures = true },
+            rustfmt = { extraArgs = { '+nightly' } },
+        },
     },
 }
 
