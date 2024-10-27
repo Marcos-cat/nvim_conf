@@ -12,6 +12,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.filetype.add { extension = { ua = 'uiua', lil = 'lil' } }
 
+local ft_opts = {
+    uiua = function() vim.o.spell = false end,
+}
+
+local ft_opts_group = vim.api.nvim_create_augroup('FileOpts', { clear = true })
+
+for ft, opts in pairs(ft_opts) do
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = ft,
+        callback = opts,
+        group = ft_opts_group,
+    })
+end
+
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.foldmethod = 'manual'
