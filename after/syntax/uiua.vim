@@ -11,5 +11,5 @@ hi link @lsp.type.monadic_modifier.uiua Type
 hi link @lsp.type.uiua_string.uiua @constructor
 hi link @lsp.type.uiua_module.uiua @symbol
 
-syn match uiuaBracket '[←()\[\]{}|^]'
+syn match uiuaBracket '[←↚()\[\]{}|^]'
 hi link uiuaBracket @punctuation
