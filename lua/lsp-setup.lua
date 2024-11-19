@@ -97,7 +97,7 @@ local servers = {
         Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
-            diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = { disable = { 'missing-fields', 'need-check-nil' } },
             hint = {
                 enable = true,
                 arrayIndex = 'Disable',
